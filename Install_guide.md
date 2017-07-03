@@ -147,13 +147,13 @@ Sao lưu file cấu hình của NTP Server
 	# cp /etc/chrony/chrony.conf /etc/chrony/chrony.conf.orig
 Cấu hình NTP server
 
-'''
+```
 echo "server 1.vn.pool.ntp.org iburst 
 server 0.asia.pool.ntp.org iburst 
 server 3.asia.pool.ntp.org iburst
 
 allow 10.10.10.0/24" >> /etc/chrony/chrony.conf
-'''
+```
 
 Khởi động lại dịch vụ NTP trên Controller
 
@@ -164,7 +164,7 @@ Kiểm tra dịch vụ NTP đã hoạt động hay chưa
 
 Output :
 
-'''
+```
 210 Number of sources = 8
 MS Name/IP address         Stratum Poll Reach LastRx Last sample
 ===============================================================================
@@ -176,7 +176,7 @@ MS Name/IP address         Stratum Poll Reach LastRx Last sample
 ^? 2001:df1:801:a005:3::1        0   6     0   10y     +0ns[   +0ns] +/-    0ns
 ^- send.mx.cdnetworks.com        2   6    77    34  +1829us[+1829us] +/-  207ms
 ^+ pontoon.latt.net              3   6    77    33   +490us[ +490us] +/-  152ms
-'''	
+```	
 	
 Tất cả các node khác tham khảo node Controller để đồng bộ đồng hồ. Thực hiên tương tự trên tất cả các node khác.
 
@@ -379,7 +379,7 @@ Restart Apache service và xóa SQLite database mặc định
 
 Cấu hình tài khoản admin : 
 
-'''
+```
 $ export OS_USERNAME=admin
 $ export OS_PASSWORD=locvx1234
 $ export OS_PROJECT_NAME=admin
@@ -388,14 +388,14 @@ $ export OS_PROJECT_DOMAIN_NAME=Default
 $ export OS_AUTH_URL=http://controller:35357/v3
 $ export OS_IDENTITY_API_VERSION=3
 	
-'''
+```
 
 ### Tạo domain, projects, users và các role
 
 	$ openstack project create --domain default \
 	--description "Service Project" service
 	
-'''	
+```
 +-------------+----------------------------------+
 | Field       | Value                            |
 +-------------+----------------------------------+
@@ -407,7 +407,7 @@ $ export OS_IDENTITY_API_VERSION=3
 | name        | service                          |
 | parent_id   | default                          |
 +-------------+----------------------------------+
-'''
+```
 
 Những task thông thường (không phải admin) nên sử dụng một project và user không có nhiều quyền. Ví dụ :
 
@@ -416,7 +416,7 @@ Những task thông thường (không phải admin) nên sử dụng một proje
 	$ openstack project create --domain default \
 	--description "Demo Project" demo	
 	
-'''
+```
 +-------------+----------------------------------+
 | Field       | Value                            |
 +-------------+----------------------------------+
@@ -429,7 +429,7 @@ Những task thông thường (không phải admin) nên sử dụng một proje
 | parent_id   | default                          |
 +-------------+----------------------------------+
 
-'''
+```
 	
 - Tạo user 
 
@@ -438,7 +438,7 @@ Những task thông thường (không phải admin) nên sử dụng một proje
 	
 # Note : mình dùng pass 000000
 	
-'''
+```
 +---------------------+----------------------------------+
 | Field               | Value                            |
 +---------------------+----------------------------------+
@@ -449,13 +449,13 @@ Những task thông thường (không phải admin) nên sử dụng một proje
 | options             | {}                               |
 | password_expires_at | None                             |
 +---------------------+----------------------------------+
-'''
+```
 	
 - Tạo user role 
 
 	$ openstack role create user
 
-'''
+```
 +-----------+----------------------------------+
 | Field     | Value                            |
 +-----------+----------------------------------+
@@ -463,7 +463,7 @@ Những task thông thường (không phải admin) nên sử dụng một proje
 | id        | 9ec4783f76504dd89fbb816e7438e54e |
 | name      | user                             |
 +-----------+----------------------------------+
-'''
+```
 
 Thêm user role vào project và user demo 
 
@@ -493,7 +493,7 @@ Request một xác thực token với user admin :
 	--os-project-name admin --os-username admin token issue
 
 
-'''
+```
 +------------+------------------------------------------------------------------------------------------------------------------------------+
 | Field      | Value                                                                                                                        |
 +------------+------------------------------------------------------------------------------------------------------------------------------+
@@ -503,7 +503,7 @@ Request một xác thực token với user admin :
 | project_id | 210387a5dc824ac2aaa93fdee42784ed                                                                                             |
 | user_id    | ee69e3d27c3c4e25b2e363b79f408e2f                                                                                             |
 +------------+------------------------------------------------------------------------------------------------------------------------------+
-'''
+```
 
 
 Request một xác thực token với user demo : 
@@ -512,7 +512,7 @@ Request một xác thực token với user demo :
 	--os-project-domain-name default --os-user-domain-name default \
 	--os-project-name demo --os-username demo token issue
 
-'''
+```
 +------------+------------------------------------------------------------------------------------------------------------------------------+
 | Field      | Value                                                                                                                        |
 +------------+------------------------------------------------------------------------------------------------------------------------------+
@@ -522,13 +522,13 @@ Request một xác thực token với user demo :
 | project_id | b167aaf8ce33471d9683988868bbd048                                                                                             |
 | user_id    | 75a4a173328b467a81dc6e3fe56af74b                                                                                             |
 +------------+------------------------------------------------------------------------------------------------------------------------------+
-'''
+```
 
 ### Script 
 
 File `admin-openrc` :
 	
-'''
+```
 export OS_PROJECT_DOMAIN_NAME=Default
 export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_NAME=admin
@@ -537,11 +537,11 @@ export OS_PASSWORD=ADMIN_PASS
 export OS_AUTH_URL=http://controller:35357/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_IMAGE_API_VERSION=2
-'''
+```
 
 File `demo-openrc`:
 
-'''
+```
 export OS_PROJECT_DOMAIN_NAME=Default
 export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_NAME=demo
@@ -550,7 +550,7 @@ export OS_PASSWORD=DEMO_PASS
 export OS_AUTH_URL=http://controller:5000/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_IMAGE_API_VERSION=2
-'''
+```
 	
 Sử dụng script : 
 
@@ -601,7 +601,7 @@ Phần này mô tả các bước cài đặt Image servive (glance) trên node 
 	
 File `admin-openrc` : 
 
-'''
+```
 export OS_PROJECT_DOMAIN_NAME=Default
 export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_NAME=admin
@@ -610,13 +610,13 @@ export OS_PASSWORD=locvx1234
 export OS_AUTH_URL=http://controller:35357/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_IMAGE_API_VERSION=2
-'''
+```
 
 - Tạo glance user :
 
 	$ openstack user create --domain default --password-prompt glance
 	
-'''
+```
 +---------------------+----------------------------------+
 | Field               | Value                            |
 +---------------------+----------------------------------+
@@ -628,7 +628,7 @@ export OS_IMAGE_API_VERSION=2
 | password_expires_at | None                             |
 +---------------------+----------------------------------+
 
-'''	
+```	
 	
 - Thêm admin role cho user `glance` và project `service`
 
@@ -639,7 +639,7 @@ export OS_IMAGE_API_VERSION=2
 	$ openstack service create --name glance \
 	  --description "OpenStack Image" image
 
-'''
+```
 +-------------+----------------------------------+
 | Field       | Value                            |
 +-------------+----------------------------------+
@@ -650,15 +650,15 @@ export OS_IMAGE_API_VERSION=2
 | type        | image                            |
 +-------------+----------------------------------+
 
-'''
+```
 
 - Tạo các Image service API endpoint : 
 
 	$ openstack endpoint create --region RegionOne \
 		image public http://controller:9292
  
- '''
- +--------------+----------------------------------+
+```
++--------------+----------------------------------+
 | Field        | Value                            |
 +--------------+----------------------------------+
 | enabled      | True                             |
@@ -672,14 +672,14 @@ export OS_IMAGE_API_VERSION=2
 | url          | http://controller:9292           |
 +--------------+----------------------------------+
 
- '''
+```
  
 
 	$ openstack endpoint create --region RegionOne \
 	  image internal http://controller:9292
 		
 		
-'''
+```
 +--------------+----------------------------------+
 | Field        | Value                            |
 +--------------+----------------------------------+
@@ -694,13 +694,13 @@ export OS_IMAGE_API_VERSION=2
 | url          | http://controller:9292           |
 +--------------+----------------------------------+
 
-'''	
+```	
 
 
 	$ openstack endpoint create --region RegionOne \
 	  image admin http://controller:9292
 
-'''
+```
 +--------------+----------------------------------+
 | Field        | Value                            |
 +--------------+----------------------------------+
@@ -716,7 +716,7 @@ export OS_IMAGE_API_VERSION=2
 +--------------+----------------------------------+
 
 
-'''		
+```		
 
 
 - Cài packages
@@ -728,14 +728,14 @@ export OS_IMAGE_API_VERSION=2
 	# cp /etc/glance/glance-api.conf /etc/glance/glance-api.conf.orig 
 	# vi /etc/glance/glance-api.conf
 
-'''
+```
 [database]
 # ...
 connection = mysql+pymysql://glance:locvx1234@controller/glance   # line 1826
 
-'''
+```
 	
-'''
+```
 [keystone_authtoken]			# line 3282		
 # ...	
 auth_uri = http://controller:5000
@@ -756,14 +756,14 @@ flavor = keystone                 # line 4268
 stores = file,http
 default_store = file
 filesystem_store_datadir = /var/lib/glance/images/
-'''	
+```	
 	
 - Edit file `/etc/glance/glance-registry.conf`
 
 	# cp /etc/glance/glance-registry.conf /etc/glance/glance-registry.conf.orig 
 	# vi /etc/glance/glance-registry.conf 
 	
-'''
+```
 [database]
 # ...
 connection = mysql+pymysql://glance:locvx1234@controller/glance  # line 1116
@@ -783,7 +783,7 @@ password = locvx1234
 # ...
 flavor = keystone
 
-'''
+```
 
 - Đăng ký vào Image service database: 
 
@@ -809,7 +809,7 @@ Sử dụng CirrOS, một distro nhỏ nhẹ cho việc test Image service
 		--public
 
 		
-'''
+```
 +------------------+------------------------------------------------------+
 | Field            | Value                                                |
 +------------------+------------------------------------------------------+
@@ -832,20 +832,20 @@ Sử dụng CirrOS, một distro nhỏ nhẹ cho việc test Image service
 | virtual_size     | None                                                 |
 | visibility       | public                                               |
 +------------------+------------------------------------------------------+
-'''
+```
 
 
 - Liệt kê các image 
 
 	$ openstack image list
 
-'''
+```
 +--------------------------------------+--------+--------+
 | ID                                   | Name   | Status |
 +--------------------------------------+--------+--------+
 | 0fc50da8-b841-4ddd-a457-49a639daa7a0 | cirros | active |
 +--------------------------------------+--------+--------+
-'''
+```
 
 
 ## Compute service
@@ -881,7 +881,7 @@ Phần này sẽ mô tả cách cài đặt và cấu hình Compute service (Nov
 		
 	# mysql
 
-'''
+```
 MariaDB [(none)]> CREATE DATABASE nova_api;
 MariaDB [(none)]> CREATE DATABASE nova;
 MariaDB [(none)]> CREATE DATABASE nova_cell0;
@@ -900,7 +900,7 @@ MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova_cell0.* TO 'nova'@'%' \
 IDENTIFIED BY 'locvx1234';
 MariaDB [(none)]> exit
 
-'''
+```
 
 - Sử dụng file `admin-openrc`
 
@@ -910,7 +910,7 @@ MariaDB [(none)]> exit
 
 	$ openstack user create --domain default --password-prompt nova
 
-'''
+```
 +---------------------+----------------------------------+
 | Field               | Value                            |
 +---------------------+----------------------------------+
@@ -922,7 +922,7 @@ MariaDB [(none)]> exit
 | password_expires_at | None                             |
 +---------------------+----------------------------------+
 
-'''	
+```	
 	
 - Thêm admin role 
 
@@ -933,7 +933,7 @@ MariaDB [(none)]> exit
 	$ openstack service create --name nova \
 	  --description "OpenStack Compute" compute
 	  
-'''
+```
 +-------------+----------------------------------+
 | Field       | Value                            |
 +-------------+----------------------------------+
@@ -943,7 +943,7 @@ MariaDB [(none)]> exit
 | name        | nova                             |
 | type        | compute                          |
 +-------------+----------------------------------+
-'''
+```
 
 
 - Tạo Compute API service endpoint
@@ -951,7 +951,7 @@ MariaDB [(none)]> exit
 	$ openstack endpoint create --region RegionOne \
 	  compute public http://controller:8774/v2.1
 
-'''
+```
 +--------------+----------------------------------+
 | Field        | Value                            |
 +--------------+----------------------------------+
@@ -965,12 +965,12 @@ MariaDB [(none)]> exit
 | service_type | compute                          |
 | url          | http://controller:8774/v2.1      |
 +--------------+----------------------------------+
-'''
+```
 
 	$ openstack endpoint create --region RegionOne \
 	  compute internal http://controller:8774/v2.1
 
-'''
+```
 +--------------+----------------------------------+
 | Field        | Value                            |
 +--------------+----------------------------------+
@@ -985,12 +985,12 @@ MariaDB [(none)]> exit
 | url          | http://controller:8774/v2.1      |
 +--------------+----------------------------------+
 
-'''
+```
 
 	$ openstack endpoint create --region RegionOne \
 	  compute admin http://controller:8774/v2.1
 
-'''
+```
 +--------------+----------------------------------+
 | Field        | Value                            |
 +--------------+----------------------------------+
@@ -1004,13 +1004,13 @@ MariaDB [(none)]> exit
 | service_type | compute                          |
 | url          | http://controller:8774/v2.1      |
 +--------------+----------------------------------+
-'''
+```
 	  
 - Tạo user Placement
 
 	$ openstack user create --domain default --password-prompt placement
 	  
-'''
+```
 +---------------------+----------------------------------+
 | Field               | Value                            |
 +---------------------+----------------------------------+
@@ -1022,13 +1022,13 @@ MariaDB [(none)]> exit
 | password_expires_at | None                             |
 +---------------------+----------------------------------+
 
-'''
+```
 
 - Tạo Placement API entry trong danh mục dịch vụ
 
 	$ openstack service create --name placement --description "Placement API" placement
 
-'''	
+```	
 +-------------+----------------------------------+
 | Field       | Value                            |
 +-------------+----------------------------------+
@@ -1038,13 +1038,13 @@ MariaDB [(none)]> exit
 | name        | placement                        |
 | type        | placement                        |
 +-------------+----------------------------------+
-'''
+```
 
 - Tạo Placement API endpoint
 
 	$ openstack endpoint create --region RegionOne placement public http://controller:8778
 
-'''
+```
 +--------------+----------------------------------+
 | Field        | Value                            |
 +--------------+----------------------------------+
@@ -1058,11 +1058,11 @@ MariaDB [(none)]> exit
 | service_type | placement                        |
 | url          | http://controller:8778           |
 +--------------+----------------------------------+
-'''
+```
 
 	$ openstack endpoint create --region RegionOne placement internal http://controller:8778
 
-'''
+```
 +--------------+----------------------------------+
 | Field        | Value                            |
 +--------------+----------------------------------+
@@ -1076,11 +1076,11 @@ MariaDB [(none)]> exit
 | service_type | placement                        |
 | url          | http://controller:8778           |
 +--------------+----------------------------------+
-'''
+```
 
 	$ openstack endpoint create --region RegionOne placement admin http://controller:8778
 	
-'''
+```
 +--------------+----------------------------------+
 | Field        | Value                            |
 +--------------+----------------------------------+
@@ -1094,7 +1094,7 @@ MariaDB [(none)]> exit
 | service_type | placement                        |
 | url          | http://controller:8778           |
 +--------------+----------------------------------+
-'''	
+```	
 	
 - Cài đặt các packages 
 
@@ -1106,7 +1106,7 @@ MariaDB [(none)]> exit
 	# cp /etc/nova/nova.conf /etc/nova/nova.conf.orig
 	# vi /etc/nova/nova.conf
 	
-'''
+```
 [api_database]
 # ...
 connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova_api 		# line 3379
@@ -1161,7 +1161,7 @@ user_domain_name = Default												# line 8205
 auth_url = http://controller:35357/v3									# line 8161
 username = placement													# line 8199
 password = locvx1234													# line 8208
-'''
+```
 
 
 - Đăng ký nove-api database
@@ -1184,24 +1184,24 @@ password = locvx1234													# line 8208
 
 	# nova-manage cell_v2 list_cells
 	
-'''
+```
 +-------+--------------------------------------+
 |  Name |                 UUID                 |
 +-------+--------------------------------------+
 | cell0 | 00000000-0000-0000-0000-000000000000 |
 | cell1 | 699fb0f3-e165-4ec9-9798-fe5925731a3a |
 +-------+--------------------------------------+
-'''
+```
 
 - Khởi động lại các service
 
-'''
+```
 # service nova-api restart
 # service nova-consoleauth restart
 # service nova-scheduler restart
 # service nova-conductor restart
 # service nova-novncproxy restart
-
+```
 
 ### Cài đặt và cấu hình một node Compute 
 
@@ -1216,7 +1216,7 @@ Phần này sẽ mô tả các bước cài đặt và cấu hình Compute servi
 	# cp /etc/nova/nova.conf /etc/nova/nova.conf.orig
 	# vi /etc/nova/nova.conf
 	
-'''
+```
 [DEFAULT]
 # ...
 transport_url = rabbit://openstack:locvx1234@controller
@@ -1273,7 +1273,7 @@ username = placement
 password = PLACEMENT_PASS
 
 
-'''
+```
 	
 Xác định xem node Compute có tăng tốc độ phần cứng cho máy ảo hay không 
 
@@ -1285,11 +1285,11 @@ Nếu lệnh trả về 0 thì phải cấu hình libvirt để sử dụng QEMU
 
 	# vi /etc/nova/nova-compute.conf
 	
-'''
+```
 [libvirt]
 # ...
 virt_type = qemu
-'''
+```
 	
 - Restart Compute service 
 
@@ -1302,24 +1302,24 @@ virt_type = qemu
 	$ . admin-openrc
 	$ openstack hypervisor list
 
-'''	
+```	
 +----+---------------------+-----------------+--------------+-------+
 | ID | Hypervisor Hostname | Hypervisor Type | Host IP      | State |
 +----+---------------------+-----------------+--------------+-------+
 |  1 | com1                | QEMU            | 10.10.10.100 | up    |
 +----+---------------------+-----------------+--------------+-------+
-'''
+```
 
 	# su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
 
-'''
+```
 Found 2 cell mappings.
 Skipping cell0 since it does not contain hosts.
 Getting compute nodes from cell 'cell1': 699fb0f3-e165-4ec9-9798-fe5925731a3a
 Found 1 computes in cell: 699fb0f3-e165-4ec9-9798-fe5925731a3a
 Checking host mapping for compute host 'com1': f00ad79a-8e68-476c-a237-25e743648a43
 Creating host mapping for compute host 'com1': f00ad79a-8e68-476c-a237-25e743648a43
-'''
+```
 
 	# vi /etc/nova/nova.conf
 		
@@ -1333,7 +1333,7 @@ Creating host mapping for compute host 'com1': f00ad79a-8e68-476c-a237-25e743648
 	$ . admin-openrc
 	$ openstack compute service list
 
-'''
+```
 +----+------------------+------------+----------+---------+-------+----------------------------+
 | ID | Binary           | Host       | Zone     | Status  | State | Updated At                 |
 +----+------------------+------------+----------+---------+-------+----------------------------+
@@ -1342,12 +1342,12 @@ Creating host mapping for compute host 'com1': f00ad79a-8e68-476c-a237-25e743648
 |  5 | nova-conductor   | controller | internal | enabled | up    | 2017-07-03T08:21:43.000000 |
 |  6 | nova-compute     | com1       | nova     | enabled | up    | 2017-07-03T08:21:37.000000 |
 +----+------------------+------------+----------+---------+-------+----------------------------+
-'''	
+```	
 	
 	$ openstack catalog list
 	
 	
-'''
+```
 +-----------+-----------+-----------------------------------------+
 | Name      | Type      | Endpoints                               |
 +-----------+-----------+-----------------------------------------+
@@ -1380,28 +1380,28 @@ Creating host mapping for compute host 'com1': f00ad79a-8e68-476c-a237-25e743648
 |           |           |   public: http://controller:8778        |
 |           |           |                                         |
 +-----------+-----------+-----------------------------------------+
-'''
+```
 
 	$ openstack image list
 
 	
-'''
+```
 +--------------------------------------+--------+--------+
 | ID                                   | Name   | Status |
 +--------------------------------------+--------+--------+
 | 0fc50da8-b841-4ddd-a457-49a639daa7a0 | cirros | active |
 +--------------------------------------+--------+--------+
-'''
+```
 
 
 	# nova-status upgrade check
 	
-'''
+```
 
-'''
+```
 
 ## Networking service
-'''
+
 ## Dashboard
 
 ## Block Storage service
