@@ -720,12 +720,16 @@ export OS_IMAGE_API_VERSION=2
 
 - Cài packages
 
-	# apt install glance -y
+```
+# apt install glance -y
+```
 	
 - Edit file `/etc/glance/glance-api.conf`
 
-	# cp /etc/glance/glance-api.conf /etc/glance/glance-api.conf.orig 
-	# vi /etc/glance/glance-api.conf
+```
+# cp /etc/glance/glance-api.conf /etc/glance/glance-api.conf.orig 
+# vi /etc/glance/glance-api.conf
+```
 
 ```
 [database]
@@ -759,9 +763,11 @@ filesystem_store_datadir = /var/lib/glance/images/
 	
 - Edit file `/etc/glance/glance-registry.conf`
 
-	# cp /etc/glance/glance-registry.conf /etc/glance/glance-registry.conf.orig 
-	# vi /etc/glance/glance-registry.conf 
-	
+```
+# cp /etc/glance/glance-registry.conf /etc/glance/glance-registry.conf.orig 
+# vi /etc/glance/glance-registry.conf 
+```	
+
 ```
 [database]
 # ...
@@ -786,12 +792,16 @@ flavor = keystone
 
 - Đăng ký vào Image service database: 
 
-	# su -s /bin/sh -c "glance-manage db_sync" glance
+```
+# su -s /bin/sh -c "glance-manage db_sync" glance
+```
 
 - Restart Image service 
 
-	# service glance-registry restart
-	# service glance-api restart
+```
+# service glance-registry restart
+# service glance-api restart
+```
 
 - Test 
 
@@ -877,8 +887,9 @@ OpenStack Compute bao gồm các thành phần :
 Phần này sẽ mô tả cách cài đặt và cấu hình Compute service (Nova) trên node Controller
 
 - Tạo các database : 
-		
-	# mysql
+```	
+# mysql
+```
 
 ```
 MariaDB [(none)]> CREATE DATABASE nova_api;
@@ -1309,7 +1320,9 @@ virt_type = qemu
 +----+---------------------+-----------------+--------------+-------+
 ```
 
-	# su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
+```
+# su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
+```
 
 ```
 Found 2 cell mappings.
@@ -1320,10 +1333,12 @@ Checking host mapping for compute host 'com1': f00ad79a-8e68-476c-a237-25e743648
 Creating host mapping for compute host 'com1': f00ad79a-8e68-476c-a237-25e743648a43
 ```
 
-	# vi /etc/nova/nova.conf
-		
-	[scheduler]
-	discover_hosts_in_cells_interval = 300							# line 8703
+```
+# vi /etc/nova/nova.conf
+	
+[scheduler]
+discover_hosts_in_cells_interval = 300							# line 8703
+```
 	
 ### Verify operation 
 
@@ -1392,11 +1407,8 @@ Creating host mapping for compute host 'com1': f00ad79a-8e68-476c-a237-25e743648
 +--------------------------------------+--------+--------+
 ```
 
-
-	# nova-status upgrade check
-	
 ```
-
+	# nova-status upgrade check
 ```
 
 ## Networking service
@@ -1930,7 +1942,7 @@ l2_population = true
 # ...
 enable_security_group = true
 firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
-
+```
 
 - Cấu hình service Compute sử dụng service Networking 
 
@@ -1966,7 +1978,9 @@ Các lệnh thực hiện trên node Controller
 $ . admin-openrc
 
 $ openstack extension list --network
+```
 
+```
 +-------------------------------------------------------+---------------------------+-------------------------------------------------------+
 | Name                                                  | Alias                     | Description                                           |
 +-------------------------------------------------------+---------------------------+-------------------------------------------------------+
