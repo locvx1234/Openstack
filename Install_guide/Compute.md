@@ -1,33 +1,49 @@
-## Compute service
+# Compute service
+
+## Overview 
 
 Sử dụng Compute để quản lý hệ thống cloud computing. OpenStack là một phần chính của IaaS. Các module chính được implement bằng python. 
 
-OpenStack Compute tương tác với OpenStack Identity cho việc xác thực; với OpenStack Image cho các disk, image; với Dashboard cho interface user và admin. 
+OpenStack Compute tương tác với OpenStack Identity cho việc xác thực; với OpenStack Image để quản lý các image; với Dashboard để user và admin sử dụng GUI. 
 
-// TODO bổ sung thêm 
+OpenStack Compute có thể mở rộng theo chiều ngang và download các image để launch các instance. 
 
 OpenStack Compute bao gồm các thành phần :
 
-- *nova-api service* : 
-- *nova-api-metadata service* :
-- *nova-compute service* :
-- *nova-placement-api service* : 
-- *nova-scheduler service* :
-- *nova-conductor module* : 
-- *nova-cert module* : 
-- *nova-consoleauth daemon* : 
-- *nova-novncproxy daemon* : 
-- *nova-spicehtml5proxy daemon* :
-- *nova-xvpvncproxy daemon* :
-- *The queue* : 
-- *SQL database* :
+- **nova-api service** : hỗ trợ OpenStack Compute API, Amazon EC2 API, và một Admin API đặc biệt cho user có đặc quyền. 
+- **nova-api-metadata service** : chấp nhận các metadata request từ instance. 
+- **nova-compute service** : một daemon dùng để tạo và ngắt các instance qua các hypervisor API. Ví dụ 
 
+* XenAPI for XenServer/XCP
+* libvirt for KVM or QEMU
+* VMwareAPI for VMware
 
-### Cài đặt và cấu hình trên node Controller
+- **nova-placement-api service** : 
+- **nova-scheduler service** :
+- **nova-conductor module** : 
+- **nova-cert module** : 
+- **nova-consoleauth daemon** : 
+- **nova-novncproxy daemon** : 
+- **nova-spicehtml5proxy daemon** :
+- **nova-xvpvncproxy daemon** :
+- **The queue** : Thường sử dụng RabbitMQ
+- **SQL database** : Lưu trữ các trạng thái build-time và run-time cho hạ tầng cloud, bao gồm :
+
+* Available instance types
+* Instances in use
+* Available networks
+* Projects
+
+Trên lý thuyết, OpenStack Compute có thể hỗ trợ nhiều database có hỗ trợ SQLAlchemy. Các database thường sử dụng là SQLite3, MySQL, MariaDB, PosgreSQL.
+
+## Cài đặt và cấu hình trên node Controller
 
 Phần này sẽ mô tả cách cài đặt và cấu hình Compute service (Nova) trên node Controller
 
-- Tạo các database : 
+### Chuẩn bị
+
+#### 1. Tạo các database : 
+
 ```	
 # mysql
 ```
@@ -53,13 +69,16 @@ MariaDB [(none)]> exit
 
 ```
 
-- Sử dụng file `admin-openrc`
+#### 2. Sử dụng file [admin-openrc](https://github.com/locvx1234/Openstack/blob/master/open-rc/admin-openrc)
 
 ```
 $ . admin-openrc
 ```
+
+#### 3. Tạo các Compute service credential
 	
-- Tạo user nova 
+- Tạo user `nova`
+
 ```
 $ openstack user create --domain default --password-prompt nova
 ```
@@ -78,13 +97,13 @@ $ openstack user create --domain default --password-prompt nova
 
 ```	
 	
-- Thêm admin role 
+- Thêm `admin` role 
 
 ```
 $ openstack role add --project service --user nova admin
 ```
 	
-- Tạo nova service entity: 
+- Tạo `nova` service entity: 
 
 ```
 $ openstack service create --name nova \
@@ -104,7 +123,7 @@ $ openstack service create --name nova \
 ```
 
 
-- Tạo Compute API service endpoint
+#### 4. Tạo Compute API service endpoint
 
 ```
 $ openstack endpoint create --region RegionOne \
@@ -170,7 +189,7 @@ $ openstack endpoint create --region RegionOne \
 +--------------+----------------------------------+
 ```
 	  
-- Tạo user Placement
+#### 5. Tạo Placement service user 
 
 ```
 $ openstack user create --domain default --password-prompt placement
@@ -190,7 +209,13 @@ $ openstack user create --domain default --password-prompt placement
 
 ```
 
-- Tạo Placement API entry trong danh mục dịch vụ
+#### 6. Thêm admin role vào user Placement
+
+```
+$ openstack role add --project service --user placement admin
+```
+
+#### 7. Tạo Placement API entry trong danh mục dịch vụ
 
 ```
 $ openstack service create --name placement --description "Placement API" placement
@@ -208,7 +233,7 @@ $ openstack service create --name placement --description "Placement API" placem
 +-------------+----------------------------------+
 ```
 
-- Tạo Placement API endpoint
+#### 8. Tạo Placement API endpoint
 
 ```
 $ openstack endpoint create --region RegionOne placement public http://controller:8778
@@ -269,15 +294,17 @@ $ openstack endpoint create --region RegionOne placement admin http://controller
 | url          | http://controller:8778           |
 +--------------+----------------------------------+
 ```	
-	
-- Cài đặt các packages 
+
+### Cài đặt và cấu hình các thành phần 
+
+#### 1. Cài đặt các packages 
 
 ```
 # apt install nova-api nova-conductor nova-consoleauth \
   nova-novncproxy nova-scheduler nova-placement-api
 ```
 
-- Edit file `/etc/nova/nova.conf`
+#### 2. Edit file `/etc/nova/nova.conf`
 
 ```
 # cp /etc/nova/nova.conf /etc/nova/nova.conf.orig
@@ -287,14 +314,14 @@ $ openstack endpoint create --region RegionOne placement admin http://controller
 ```
 [api_database]
 # ...
-connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova_api 		# line 3379
+connection = mysql+pymysql://nova:locvx1234@controller/nova_api 		# line 3379
 [database]
 # ...
-connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova 			# line 4396
+connection = mysql+pymysql://nova:locvx1234@controller/nova 			# line 4396
 
 [DEFAULT]
 # ...
-transport_url = rabbit://openstack:RABBIT_PASS@controller				# line 3021
+transport_url = rabbit://openstack:locvx1234@controller				# line 3021
 
 [api]
 # ...
@@ -342,32 +369,32 @@ password = locvx1234													# line 8208
 ```
 
 
-- Đăng ký nove-api database
+#### 3. Đăng ký nove-api database
 
 ```
 # su -s /bin/sh -c "nova-manage api_db sync" nova
 ```
 
-- Đăng ký cell0 database
+#### 4. Đăng ký database `cell0`
 
 ```
 # su -s /bin/sh -c "nova-manage cell_v2 map_cell0" nova
 ```
 	
-- Tạo `cell1`	
+#### 5. Tạo `cell1`	
 
 ```
 # su -s /bin/sh -c "nova-manage cell_v2 create_cell --name=cell1 --verbose" nova
 699fb0f3-e165-4ec9-9798-fe5925731a3a
 ```
 	
-- Đăng ký nova database
+#### 6. Đăng ký database `nova`
 
 ```
 # su -s /bin/sh -c "nova-manage db sync" nova
 ```
 
-- Liệt kê 2 cell đã đăng ký 
+#### 7. Liệt kê 2 cell đã đăng ký 
 
 ```
 # nova-manage cell_v2 list_cells
@@ -382,7 +409,7 @@ password = locvx1234													# line 8208
 +-------+--------------------------------------+
 ```
 
-- Khởi động lại các service
+### Khởi động lại các service
 
 ```
 # service nova-api restart
@@ -392,17 +419,20 @@ password = locvx1234													# line 8208
 # service nova-novncproxy restart
 ```
 
-### Cài đặt và cấu hình một node Compute 
+## Cài đặt và cấu hình một node Compute 
+
 
 Phần này sẽ mô tả các bước cài đặt và cấu hình Compute service trên node Compute. Service này hỗ trợ một vài hyvervisor để deloy các instance hoặc VM. Để đơn giản, cấu hình này sử dụng QEMU hypervisor với KVM extension trên node compute hỗ trợ tăng tốc phần cứng cho các máy ảo. 
 
-- Cài đặt package nova-compute 
+### Cài đặt và cấu hình các thành phần 
+
+#### 1. Cài đặt package nova-compute 
 
 ```
 # apt install nova-compute
 ```
 	
-- Edit file `/etc/nova/nova.conf`
+#### 2. Edit file `/etc/nova/nova.conf`
 
 ```
 # cp /etc/nova/nova.conf /etc/nova/nova.conf.orig
@@ -427,7 +457,7 @@ project_domain_name = default
 user_domain_name = default
 project_name = service
 username = nova
-password = NOVA_PASS
+password = locvx1234
 
 
 [DEFAULT]
@@ -463,12 +493,13 @@ auth_type = password
 user_domain_name = Default
 auth_url = http://controller:35357/v3
 username = placement
-password = PLACEMENT_PASS
-
+password = locvx1234
 
 ```
 	
-Xác định xem node Compute có tăng tốc độ phần cứng cho máy ảo hay không 
+### Hoàn tất cài đặt 
+
+- Xác định xem node Compute có tăng tốc độ phần cứng cho máy ảo hay không 
 
 ```
 $ egrep -c '(vmx|svm)' /proc/cpuinfo
@@ -498,6 +529,8 @@ virt_type = qemu
 
 * Node * : Các lệnh thực hiện trên node Controller 
 
+- List các hypervisor 
+
 ```
 $ . admin-openrc
 $ openstack hypervisor list
@@ -511,6 +544,8 @@ $ openstack hypervisor list
 +----+---------------------+-----------------+--------------+-------+
 ```
 
+- Discover compute hosts
+
 ```
 # su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
 ```
@@ -523,6 +558,8 @@ Found 1 computes in cell: 699fb0f3-e165-4ec9-9798-fe5925731a3a
 Checking host mapping for compute host 'com1': f00ad79a-8e68-476c-a237-25e743648a43
 Creating host mapping for compute host 'com1': f00ad79a-8e68-476c-a237-25e743648a43
 ```
+
+Khi bạn thêm một node Compute mới, bạn phải chạy lệnh `nova-manage cell_v2 discover_hosts` trên node Controller để đăng ký node mới. Hoặc cách khác là có thể đặt khoảng thời gian thích hợp trong file `/etc/nova/nova.conf`. 
 
 ```
 # vi /etc/nova/nova.conf
@@ -540,6 +577,8 @@ $ . admin-openrc
 $ openstack compute service list
 ```
 
+- List các thành phần của service 
+
 ```
 +----+------------------+------------+----------+---------+-------+----------------------------+
 | ID | Binary           | Host       | Zone     | Status  | State | Updated At                 |
@@ -550,6 +589,8 @@ $ openstack compute service list
 |  6 | nova-compute     | com1       | nova     | enabled | up    | 2017-07-03T08:21:37.000000 |
 +----+------------------+------------+----------+---------+-------+----------------------------+
 ```	
+
+- List các API endpoint trong Identity service 
 	
 ```
 $ openstack catalog list
@@ -589,6 +630,9 @@ $ openstack catalog list
 |           |           |                                         |
 +-----------+-----------+-----------------------------------------+
 ```
+
+- List các image 
+
 ```
 $ openstack image list
 ```
@@ -600,7 +644,7 @@ $ openstack image list
 | 0fc50da8-b841-4ddd-a457-49a639daa7a0 | cirros | active |
 +--------------------------------------+--------+--------+
 ```
-
+- Kiểm tra các cell và placement API hoạt động thành công
 ```
 # nova-status upgrade check
 ```

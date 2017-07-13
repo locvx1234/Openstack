@@ -509,7 +509,7 @@ Các lệnh thực hiện trên node Compute
 # ...
 transport_url = rabbit://openstack:locvx1234@controller				# line 507
 
-auth_strategy = keystone											# line 27
+auth_strategy = keystone							# line 27
 
 [keystone_authtoken]
 # ...
