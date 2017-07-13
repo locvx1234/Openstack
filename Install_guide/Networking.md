@@ -1,40 +1,44 @@
 ## Networking service
 
+### Overview 
+
 OpenStack Networking (neutron) cho phép tạo và gắn các interface được quản lý bởi các service OpenStack khác. Các plug-in có thể được implement để chứa các thiết bị và phần mềm mạng khác nhau, cung cấp tính linh hoạt cho kiến trúc và triển khai OpenStack.
 
 Nó bao gồm các thành phần : 
 
-- *neutron-server* : chấp nhận và định tuyến các API request tới plug-in thích hợp 
-- *OpenStack Networking plug-ins and agents* : plug và unplug port, tạo network hoặc subnet và cung cấp địa chỉ IP. Các plug-in và các agent khác nhau tùy thuộc nhà cung cấp và công nghệ sử dụng trong cloud. OpenStack Networking cung cấp các plug-in và agent cho các Switch Cisco virtual và physic, NEC OpenFlow, Open vSwitch, Linux bridge và VMware NSX.
+- **neutron-server** : cho phép và định tuyến các API request tới các plug-in thích hợp 
+- **Các plug-in và các agent Networking** : plug và unplug port, tạo network hoặc subnet và cung cấp địa chỉ IP. Các plug-in và các agent khác nhau tùy thuộc nhà cung cấp và công nghệ sử dụng trong cloud. OpenStack Networking cung cấp các plug-in và agent cho các Switch Cisco (cả virtual và physic), NEC OpenFlow, Open vSwitch, Linux bridge và VMware NSX.
 
 Các agent thông thường là L3 (layer 3), DHCP, và một plug-in agent.
 
-- *Messaging queue* : được sử dụng để định tuyến thông tin giữa các neutron-server và các agent. Nó cũng hoạt động như một database để lưu trữ trạng thái cho cac plugin cụ thể
+- **Messaging queue** : được sử dụng để định tuyến thông tin giữa các neutron-server và các agent. Nó cũng hoạt động như một database để lưu trữ trạng thái cho cac plugin cụ thể
 
 
 ### Networking (neutron) concepts
 
-OpenStack Networking (neutron) quản lý tất cả các khía cạnh mạng cho Virtual Networking Infrastructure và lớp truy cập Physical Networking Infrastructure. t. OpenStack Networking enable các project để tạo các topo mạng nâng cao, có thể bao gồm firewall, load balancer, VPN.
+OpenStack Networking (neutron) quản lý tất cả những cái liên quan đến hạ tầng vật lý và hạ tầng mạng. OpenStack Networking cho phép tạo các topo mạng nâng cao, có thể bao gồm firewall, load balancer, VPN.
 
-Networking cung cấp mạng, mạng con, bộ định tuyến như các đối tượng trừu tượng để giả lập các đối tượng vật lý tương ứng. 
+Networking cung cấp mạng, mạng con, bộ định tuyến giả lập các đối tượng vật lý tương ứng. 
 
-Bất kỳ cấu hình Networking nào cũng có ít nhất một external network. Không như các network khác, external network thì không đơn thuần là một mạng ảo được định nghĩa. Thay vào đó, nó được xem như có một phần là physic. Địa chỉ IP trên extenal network có thể truy cập từ mạng bên ngoài.
+Bất kỳ cấu hình Networking nào cũng có ít nhất một external network. Không như các network khác, external network không đơn thuần là một mạng ảo, nó có một phần vật lý. Địa chỉ IP trên extenal network có thể truy cập từ mạng bên ngoài.
 
-Thêm vào đó, Networking cũng có ít nhất một hoặc nhiều internal network. Các SDN này kết nối trực tiếp với các VM. Chỉ các VM trên internal network hoặc trong các subnet được kết nối qua interface mới có thể kết nối được với các VM kết nối trực tiếp với mạng đó. 
+Thêm vào đó, Networking cũng có ít nhất một hoặc nhiều internal network. SDN sẽ kết nối trực tiếp các VM với nhau. 
 
-Đối với mạng bên ngoài để truy cập vào VM và ngược lại thì cần đến các bộ định tuyến. Mỗi router có một cổng kết nối với external network và một hoặc nhiều interface để kết nối với mạng nội bộ. Giống như các bộ định tuyến vật lý, các subnet có thể truy cập các máy trên subnet khác cùng router, và các máy có thể truy cập ra mạng bên ngoài qua router. 
+Đối với mạng bên ngoài để truy cập vào VM và ngược lại thì cần đến router. Mỗi router có một cổng kết nối với external network và một hay nhiều interface để kết nối với internal network. Giống như các router vật lý, các subnet có thể truy cập các máy trên subnet khác cùng router, và các máy có thể truy cập ra mạng bên ngoài qua router. 
 
-Bạn có thể phân bố địa chỉ IP trên external network đến các port trên internal network. Bất cứ khi nào một cái gì đó được kết nối với một subnet, kết nối đó được gọi đến một port. Ban có thể liên kết các địa chỉ IP external network với port VM, bằng cách này bên ngoài có thể truy cập vào các VM. 
+Bạn có thể cấp phát địa chỉ IP trên external network đến các port trên internal network. Khi một cái gì đó được kết nối với một subnet, kết nối đó được gọi đến một port. Bạn có thể liên kết các địa chỉ IP external network với port VM, bằng cách này bên ngoài có thể truy cập vào các VM. 
 
-Networking cũng hỗ trợ các nhóm bảo mật. Các nhóm bảo mật cho phép admin xác định firewall rule theo group. Một VM có thể thuộc về một hoặc nhiều group, và Networking áp dụng các rule trong các group để chặn hoặc bỏ chặn các port, range hoặc các loại traffic cho VM đó.
+Networking cũng hỗ trợ các group bảo mật. Các group bảo mật cho phép admin xác định firewall rule theo group. Một VM có thể thuộc về một hoặc nhiều group, và Networking áp dụng các rule trong các group để chặn hoặc bỏ chặn các port, range hoặc các loại traffic cho VM đó.
 
 ### Cài đặt và cấu hình node Controller 
 
-- Tạo database và phân quyền 
+#### 1. Tạo database 
+
+Tạo database `neutron` và phân quyền cho user `neutron` với password `locvx1234`
 
 ```
 # mysql
-
+ 
 MariaDB [(none)] CREATE DATABASE neutron;
 
 MariaDB [(none)]> GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' \
@@ -46,13 +50,15 @@ IDENTIFIED BY 'locvx1234';
 MariaDB [(none)]> exit
 ```
 
-- Sử dụng các biến trong `admin-openrc`
+#### 2. Sử dụng các biến trong [admin-openrc](#)
 
 ```
 $ . admin-openrc
 ```
 	
-- Tạo service credential  
+#### 3. Tạo service credential
+
+- Tạo user `neutron`
 
 ```
 $ openstack user create --domain default --password-prompt neutron
@@ -71,18 +77,20 @@ $ openstack user create --domain default --password-prompt neutron
 +---------------------+----------------------------------+
 ```
 
-- Thêm admin role cho user neutron 
+- Thêm `admin` role cho user `neutron`
 
 ```
 $ openstack role add --project service --user neutron admin
 ```
 
-- Tạo neutron service entity
+- Tạo `neutron` service entity
 
 ```
 $ openstack service create --name neutron \
 --description "OpenStack Networking" network
-	
+```
+
+```	
 +-------------+----------------------------------+
 | Field       | Value                            |
 +-------------+----------------------------------+
@@ -94,7 +102,7 @@ $ openstack service create --name neutron \
 +-------------+----------------------------------+
 ```
 
-- Tạo Networking service API endpoint : 
+#### 4. Tạo Networking service API endpoint 
 
 ```
 $ openstack endpoint create --region RegionOne \
@@ -150,25 +158,27 @@ network admin http://controller:9696
 +--------------+----------------------------------+
 ```
 
-### Cấu hình networking 
+#### 5. Cấu hình networking 
 
-Option 1 deploy kiến trúc đơn giản nhất chỉ hỗ trợ việc gắn các thực thể để cung cấp external network. Không private network, router hoặc floating IP address. 
+**Option 1** chỉ hỗ trợ việc gắn các instance để cung cấp external network. Không có private network, router hoặc floating IP address. 
 
-User admin và những user có đặc quyền  có thể quản lý provider network.
+User admin và những user có quyền tương đương có thể quản lý provider network.
 
-Option 2 hỗ trợ option 1 với các service layer 3, giúp cho việc gắn các instance vào self-service (private) network. 
+**Option 2** mở rộng của option 1 với các service layer 3, giúp cho việc gắn các instance vào self-service (private) network. 
 
-User demo và những user thường cũng có thể quản lý self-service network bao gồm router cung cấp kết nối giữa self-service và provider network.
+User `demo` và những user thường cũng có thể quản lý self-service network bao gồm router cung cấp kết nối giữa self-service và provider network.
 
-Floating IP address cung cấp kết nối tới các instance sử dụng self-service từ external network như Internet.
+Floating IP address cung cấp kết nối tới các instance sử dụng self-service từ các external network như Internet.
 
-### Networking Option 1: Provider networks
+Chọn 1 trong 2 option bên dưới :
+
+##### 5.1. Networking Option 1: Provider networks
 
 Cấu hình trên node Controller 
 
 - Cài đặt các package
 
-```
+```sh
 # apt install neutron-server neutron-plugin-ml2 \
 neutron-linuxbridge-agent neutron-dhcp-agent \
 neutron-metadata-agent
@@ -176,7 +186,7 @@ neutron-metadata-agent
 
 - Edit file `/etc/neutron/neutron.conf`
 
-```
+```sh
 # cp /etc/neutron/neutron.conf /etc/neutron/neutron.conf.orig 
 # vi /etc/neutron/neutron.conf
 ```
@@ -190,7 +200,7 @@ connection = mysql+pymysql://neutron:locvx1234@controller/neutron
 core_plugin = ml2
 service_plugins =
 
-transport_url = rabbit://openstack:RABBIT_PASS@controller
+transport_url = rabbit://openstack:locvx1234@controller
 
 auth_strategy = keystone
 
@@ -225,7 +235,7 @@ password = locvx1234
 
 - Cấu hình Modular Layer 2 (ML2) plug-in
 
-```
+```sh
 # cp /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugins/ml2/ml2_conf.ini.orig
 # vi /etc/neutron/plugins/ml2/ml2_conf.ini
 ```
@@ -249,10 +259,12 @@ enable_ipset = true
 
 - Cấu hình Linux bridge agent
 
-```
+```sh
 # cp /etc/neutron/plugins/ml2/linuxbridge_agent.ini /etc/neutron/plugins/ml2/linuxbridge_agent.ini.orig 
 # vi /etc/neutron/plugins/ml2/linuxbridge_agent.ini
 ```
+
+**NOTE**: `PROVIDER_INTERFACE_NAME` ở bài lab này là `eth0`
 
 ```
 [linux_bridge]
@@ -283,11 +295,11 @@ enable_isolated_metadata = true
 ```
 
 
-### Networking Option 2: Self-service networks
+##### 5.2. Networking Option 2: Self-service networks
 
 - Cài đặt các package : 
 
-```
+```sh
 # apt install neutron-server neutron-plugin-ml2 \
 neutron-linuxbridge-agent neutron-l3-agent neutron-dhcp-agent \
 neutron-metadata-agent
@@ -295,7 +307,7 @@ neutron-metadata-agent
 
 - Edit file `/etc/neutron/neutron.conf`
 
-```
+```sh
 # cp /etc/neutron/neutron.conf /etc/neutron/neutron.conf.orig 
 # vi /etc/neutron/neutron.conf
 ```
@@ -304,14 +316,14 @@ neutron-metadata-agent
 ```
 [database]
 # ...
-connection = mysql+pymysql://neutron:NEUTRON_DBPASS@controller/neutron  # line 765
+connection = mysql+pymysql://neutron:locvx1234@controller/neutron  # line 765
 
 [DEFAULT]
 core_plugin = ml2											# line 30
 service_plugins = router									# line 33
 allow_overlapping_ips = true 								# line 91
 
-transport_url = rabbit://openstack:RABBIT_PASS@controller 	# line 570
+transport_url = rabbit://openstack:locvx1234@controller 	# line 570
 
 auth_strategy = keystone 									# line 27
 
@@ -377,10 +389,12 @@ enable_ipset = true						# line 248
 
 - Cấu hình Linux bridge agent
 
-```
+```sh
 # cp /etc/neutron/plugins/ml2/linuxbridge_agent.ini /etc/neutron/plugins/ml2/linuxbridge_agent.ini.orig 
 # vi /etc/neutron/plugins/ml2/linuxbridge_agent.ini
 ```
+
+**NOTE**: `PROVIDER_INTERFACE_NAME` ở bài lab này là `eth0`
 
 ```
 [linux_bridge]
@@ -399,7 +413,7 @@ firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver #
 
 - Cấu hình layer-3 agent
 
-```
+```sh
 # cp /etc/neutron/l3_agent.ini /etc/neutron/l3_agent.ini.orig 
 # vi /etc/neutron/l3_agent.ini
 ```
@@ -420,7 +434,14 @@ dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
 enable_isolated_metadata = true
 ```
 
-- Cấu hình metadata agent `/etc/neutron/metadata_agent.ini`
+
+
+#### 6. Cấu hình metadata agent
+
+```sh
+# cp /etc/neutron/metadata_agent.ini /etc/neutron/metadata_agent.ini.orig 
+# vi /etc/neutron/metadata_agent.ini
+```
 
 ```
 [DEFAULT]
@@ -429,7 +450,7 @@ nova_metadata_ip = controller
 metadata_proxy_shared_secret = locvx1234
 ```
 
-- Cấu hình Compute service sử dụng Networking service 
+#### 7. Cấu hình Compute service sử dụng Networking service 
 ```
 # vi/etc/nova/nova.conf
 ```
@@ -445,15 +466,15 @@ user_domain_name = default
 region_name = RegionOne
 project_name = service
 username = neutron
-password = NEUTRON_PASS
+password = locvx1234
 service_metadata_proxy = true
 metadata_proxy_shared_secret = locvx1234
 ```
 
 
-### Hoàn tất cài đặt 
+#### 8. Hoàn tất cài đặt 
 
-```
+```sh
 # su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
 --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
 
@@ -467,7 +488,7 @@ metadata_proxy_shared_secret = locvx1234
 
 Với option 2, restart thêm layer-3 service 
 
-```
+```sh
 # service neutron-l3-agent restart
 ```
 
@@ -475,9 +496,9 @@ Với option 2, restart thêm layer-3 service
 
 Các lệnh thực hiện trên node Compute
 
-- Cài package và sử file `/etc/neutron/neutron.conf`
+- Cài package và edit file `/etc/neutron/neutron.conf`
 
-```
+```sh
 # apt install neutron-linuxbridge-agent
 # cp /etc/neutron/neutron.conf /etc/neutron/neutron.conf.orig 
 # vi /etc/neutron/neutron.conf
@@ -507,6 +528,8 @@ password = locvx1234
 
 Option 1 : Edit file `/etc/neutron/plugins/ml2/linuxbridge_agent.ini`
 
+**NOTE**: `PROVIDER_INTERFACE_NAME` ở bài lab này là `eth0`
+
 ```
 [linux_bridge]
 physical_interface_mappings = provider:eth0
@@ -521,6 +544,8 @@ firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
 ```
 
 Option 2: Edit file `/etc/neutron/plugins/ml2/linuxbridge_agent.ini`
+
+**NOTE**: `PROVIDER_INTERFACE_NAME` ở bài lab này là `eth0`
 
 ```
 [linux_bridge]
