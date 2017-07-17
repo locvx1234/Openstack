@@ -16,8 +16,8 @@ Sau khi làm quen với cài đặt cơ bản, cấu hình, xử lý sự cố c
 
 - Sử dụng các công cụ như Ansible, Chef, Puppet, Salt để tự động triển khai và quản lý product.
 
-
-### Example architecture (#example_architecture)
+<a name="example_architecture">
+### Example architecture 
 
 Mô hình lab này cần tối thiểu 2 node (host) để chạy một virtual machine hoặc instance.
 
