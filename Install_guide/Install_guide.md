@@ -21,7 +21,6 @@
 ## [Launch an instance](https://github.com/locvx1234/Openstack/blob/master/Install_guide/LaunchInstance.md)
 
 
-
 Tham khảo : 
 
 https://docs.openstack.org/ocata/install-guide-ubuntu/InstallGuide.pdf

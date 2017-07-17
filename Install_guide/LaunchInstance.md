@@ -523,3 +523,7 @@ $ openstack server create --flavor m1.nano --image cirros \
 +-----------------------------+-----------------------------------------------+
  
 ```
+
+Hết rồi :)) 
+
+:arrow_right: [Content](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Install_guide.md)
