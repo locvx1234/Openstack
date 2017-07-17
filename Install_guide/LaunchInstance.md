@@ -10,9 +10,9 @@ Networking option 2 cũng bao gồm 1 provider (external) network với một in
 
 ### Tạo provider network 
 
-![Option 1 - overview]()
+![Option 1 - overview](https://github.com/locvx1234/Openstack/blob/master/images/provider_overview.png)
 
-![Option 1 - connectivity]()
+![Option 1 - connectivity](https://github.com/locvx1234/Openstack/blob/master/images/provider_connectivity.png)
 
 - Trên node Controller, sử dụng các biến trong file `admin-openrc`
 
@@ -116,11 +116,11 @@ Self-service network kết nối với hạ tầng physical network qua NAT/ M�
 
 Tuy nhiên để truy cập vào một instance trên network này từ external network như Internet thì cần một floating IP address.
 
-*Warning* : Phải tạo provider network trước khi tạo self-service network.
+**Warning** : Phải tạo provider network trước khi tạo self-service network.
 
-![option 2 - overview]()
+![option 2 - overview](https://github.com/locvx1234/Openstack/blob/master/images/self_service_overview.png)
 
-![option 2 - connectivity]
+![option 2 - connectivity](https://github.com/locvx1234/Openstack/blob/master/images/self_service_connectivity.png)
 
 #### Tạo self-service network
 

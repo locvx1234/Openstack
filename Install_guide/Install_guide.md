@@ -1,24 +1,24 @@
 # Contents
 
-## [Overview](https://github.com/locvx1234/Openstack/blob/master/Overview.md)
+## [Overview](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Overview.md)
 
-## [Environment](https://github.com/locvx1234/Openstack/blob/master/Environment.md)
+## [Environment](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Environment.md)
 
-## [Identity service](https://github.com/locvx1234/Openstack/blob/master/Identity.md)
+## [Identity service](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Identity.md)
 	
-## [Image service (glance)](https://github.com/locvx1234/Openstack/blob/master/Image.md)
+## [Image service (glance)](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Image.md)
 
-## [Compute service](https://github.com/locvx1234/Openstack/blob/master/Compute.md)
+## [Compute service](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Compute.md)
 
-## [Networking service](https://github.com/locvx1234/Openstack/blob/master/Networking.md)
+## [Networking service](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Networking.md)
 
-## [Dashboard](https://github.com/locvx1234/Openstack/blob/master/Dashboard.md)
+## [Dashboard](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Dashboard.md)
 
-## [Block Storage service](https://github.com/locvx1234/Openstack/blob/master/BlockStorage.md)
+## [Block Storage service](https://github.com/locvx1234/Openstack/blob/master/Install_guide/BlockStorage.md)
 
-## [Additional service]
+## [Additional service](https://github.com/locvx1234/Openstack/blob/master/Install_guide/AdditionalService.md)
 
-## [Launch an instance](https://github.com/locvx1234/Openstack/blob/master/LaunchInstance.md)
+## [Launch an instance](https://github.com/locvx1234/Openstack/blob/master/Install_guide/LaunchInstance.md)
 
 
 
