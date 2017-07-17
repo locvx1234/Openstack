@@ -6,7 +6,7 @@
 
 ## [Identity service](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Identity.md)
 	
-## [Image service (glance)](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Image.md)
+## [Image service](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Image.md)
 
 ## [Compute service](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Compute.md)
 
