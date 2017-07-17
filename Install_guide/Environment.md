@@ -1,10 +1,12 @@
+:arrow_left: [Overview](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Overview.md)
+
 ## Environment
 
-Phần này giải thích cách cấu hình Node Controller và 1 node Compute sử dụng Example architecture.
+Phần này giải thích cách cấu hình node Controller và node Compute sử dụng [Example architecture](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Overview.md#example_architecture).
 
-Hầu hết các môi trường bao gồm Identity, Image service, Compute, ít nhất một service networking và Dashboard, service Object Storage có thể sử dụng độc lập.
+Hầu hết các môi trường bao gồm Identity service , Image service, Compute, Networking còn Dashboard, Block Storage, Object Storage và các thành phần khác là tùy chọn.
 
-Yêu cầu tối thiểu trên CirrOS - một distribute Linux :
+Yêu cầu tối thiểu để sử dụng với những OS nhỏ nhẹ như CirrOS:
 
 - Controller Node: 1 processor, 4 GB memory, 5 GB storage
 - Compute Node: 1 processor, 2 GB memory, 10 GB storage
@@ -19,7 +21,7 @@ Cho lần cài đầu tiên, nhiều người sẽ chọn cách cài trên máy 
 
 Các service OpenStack  hỗ trợ service theo các phương thức như password, policy, encryption. 
 
-Để đơn giản quá trình cài đặt, guide này chỉ bảo mật theo password.
+Để đơn giản quá trình cài đặt, hướng dẫn này chỉ bảo mật theo password.
 
 Password có thể tạo bằng tay, nhưng chuỗi kết nối database trong file cấu hình không được chứa ký tự đặc biệt như "@"/
 
@@ -29,7 +31,7 @@ Recommend sử dụng [pwgen](https://sourceforge.net/projects/pwgen/) hoặc ch
 
 Trong guide này sử dụng SERVICE_PASS để sử dụng cho password các service, SERVICE_DBPASS sử dụng cho password của database.
 
-Đây là các biến pass 
+Đây là các biến pass và mình thay thế tất cả đều là `locvx1234` cho dễ nhớ :)) 
 
 ![Password](https://raw.githubusercontent.com/locvx1234/Openstack/master/images/password.png)
 
@@ -118,13 +120,6 @@ Hầu hết các dịch vụ OpenStack đều cần SQL database để lưu tr�
 
 Chúng ta sẽ sử dụng MariaDB hoặc MySQL trong distro này, bên cạnh đó, các service OpenStack cũng hỗ trợ tốt với các SQL database khác như PostgreSQL.
 
-Khai báo mật khẩu cho tài khoản root trong MariaDB # Phần này warning
-
-	# echo mariadb-server-10.0 mysql-server/root_password locvx1234 | \
-		debconf-set-selections
-	# echo mariadb-server-10.0 mysql-server/root_password_again locvx1234 | \
-		debconf-set-selections
-
 Cài đặt gói của MariaDB
 
 	# apt install -y mariadb-server python-pymysql
@@ -188,3 +183,6 @@ Khởi động lại memcached
 
 	systemctl enable memcached.service
 	systemctl start memcached.service
+	
+	
+:arrow_right: [Identity service](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Identity.md)

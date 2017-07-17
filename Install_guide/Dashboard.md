@@ -1,4 +1,6 @@
-## Dashboard
+:arrow_left: [Networking](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Networking.md)
+
+## Dashboard (Horizon)
 
 Cài đặt và cấu hình dashboard trên node Controller 
 
@@ -76,3 +78,6 @@ Reload cấu hình webserver :
 ```
 
 Sau đó truy cập `http:\\controller/horizon` và đăng nhập với user `admin` hoặc `demo` và domain `default` 
+
+
+:arrow_right: [Block Storage service](https://github.com/locvx1234/Openstack/blob/master/Install_guide/BlockStorage.md)

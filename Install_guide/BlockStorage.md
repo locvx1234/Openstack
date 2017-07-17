@@ -6,15 +6,15 @@ Service cũng cho phép quản lý các volume snapshot, volume type.
 
 Block Storage bao gồm các thành phần sau :
 
-*cinder-api* : Chấp nhận các API request và định tuyến chúng tới `cinder-volume` 
+**cinder-api** : Chấp nhận các API request và định tuyến chúng tới `cinder-volume` 
 
-*cinder-volume* : Tương tác trực tiếp với Block Storage service và các tiến trình như `cinder-scheduler`. Nó cũng tương tác với các tiến trình qua Message queue. 
+**cinder-volume** : Tương tác trực tiếp với Block Storage service và các tiến trình như `cinder-scheduler`. Nó cũng tương tác với các tiến trình qua `Message queue`. 
 
-*cinder-scheduler daemon* : Lựa chọn node cung cấp storage tối ưu để tạo volume. Một thành phần tương tự là nova-scheduler
+**cinder-scheduler daemon** : Lựa chọn node cung cấp storage tối ưu để tạo volume. Một thành phần tương tự là `nova-scheduler`
 
-*cinder-backup daemon* : `cinder-backup` service cung cấp backup volume, giống như `cinder-volume`, nó có thể tương tác với nhiều storage provider.
+**cinder-backup daemon** : `cinder-backup` service cung cấp backup volume, giống như `cinder-volume`, nó có thể tương tác với nhiều storage provider.
 
-*Messaging queue* : định tuyến thông tin giữa các tiếng trình Block Storage
+**Messaging queue** : định tuyến thông tin giữa các tiếng trình Block Storage
 
 
 ### Cài đặt và cầu hình trên node Controller
@@ -279,9 +279,24 @@ Thực hiện các bước trên node Storage
 
 Một vài distro đã hỗ trợ sẵn LVM 
 
-- Tạo LVM physical volume `/dev/xvda1`
+- Tạo LVM physical volume `/dev/xvdb`
 
 ```
-# pvcreate /dev/xvda1
+# pvcreate /dev/xvdb
+
+Physical volume "/dev/xvdb" successfully created
+```
+
+- Tạo LVM volume group `cinder-volumes`
 
 ```
+# vgcreate cinder-volumes /dev/xvdb
+
+Volume group "cinder-volumes" successfully created
+```
+
+
+// TO DO còn dở 
+
+
+:arrow_right: [Additional services]()

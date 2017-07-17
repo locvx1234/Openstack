@@ -1,4 +1,6 @@
-## Networking service
+:arrow_left: [Compute](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Compute.md)
+
+## Networking service (Neutron)
 
 ### Overview 
 
@@ -672,3 +674,5 @@ $ openstack network agent list
 | 220fb8c8-dd5e-4a72-8ce8-08e228424a18 | DHCP agent     | controller | nova              | True  | UP    | neutron-dhcp-agent     |
 +--------------------------------------+----------------+------------+-------------------+-------+-------+------------------------+
 ```
+
+:arrow_right: [Dashboard](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Dashboard.md)

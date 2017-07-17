@@ -1,4 +1,6 @@
-## Identity service 
+:arrow_left: [Environment](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Environment.md)
+
+## Identity service (Keystone)
 
 Identity service quản lý việc xác thực, cấp phép và một service catalog.
 
@@ -18,9 +20,9 @@ Internal API network có thể bị giới hạn đối với máy chủ có ch�
 
 Identity service chứa 3 thành phần : 
 
-- *Server* : Một server tập trung cung cấp dịch vụ authentication và authorization sử dụng một RESTful interface
-- *Drivers* : Các drive hoặc một service back end được tích hợp vào server tập trung. Chúng sử dụng để truy cập thông tin trong các repo bên ngoài OpenStack và có thể tồn tại trong hạ tầng mà OpenStack deploy (ví dụ SQL database, LDAP server)
-- *Modules* :  Các module middleware trong OpenStack sử dụng Identity service
+- **Server** : Một server tập trung cung cấp dịch vụ authentication và authorization sử dụng một RESTful interface
+- **Drivers** : Các drive hoặc một service back end được tích hợp vào server tập trung. Chúng sử dụng để truy cập thông tin trong các repo bên ngoài OpenStack và có thể tồn tại trong hạ tầng mà OpenStack deploy (ví dụ SQL database, LDAP server)
+- **Modules** :  Các module middleware trong OpenStack sử dụng Identity service
 
 ### Cài đặt và cấu hình 
 
@@ -34,7 +36,7 @@ Tạo keystone database:
 	
 	MariaDB [(none)]> CREATE DATABASE keystone default character set utf8;
 
-Cấp quyền truy cập cho keystone database với KEYSTONE_DBPASS là locvx1234 :
+Cấp quyền truy cập cho keystone database với KEYSTONE_DBPASS là `locvx1234` :
 	
 	MariaDB [(none)]> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY 'locvx1234' WITH GRANT OPTION;
 	MariaDB [(none)]> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'locvx1234' WITH GRANT OPTION;
@@ -44,7 +46,7 @@ Exit database access
 
 	MariaDB [(none)]> exit
 	
-* Note : * Apache HTTP server với `mod_wsgi` để đáp ứng các request Identity service trên cổng 5000 và 35357 
+**Note**: Apache HTTP server với `mod_wsgi` để đáp ứng các request Identity service trên cổng 5000 và 35357 
 
 Cài đặt gói keystone: 
 
@@ -197,7 +199,7 @@ $ openstack role add --project demo --user demo user
 
 Cần verify lại Identity service trước khi cài đặt các service khác. 
 
-* Note : * Các lệnh thực hiện trên node Controller  	
+**Note** : Các lệnh thực hiện trên node Controller  	
 	
 Vì lý do bảo mật, disable cơ chế xác thực token tạm thời 
 
@@ -264,7 +266,7 @@ export OS_PROJECT_DOMAIN_NAME=Default
 export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_NAME=admin
 export OS_USERNAME=admin
-export OS_PASSWORD=ADMIN_PASS
+export OS_PASSWORD=locvx1234
 export OS_AUTH_URL=http://controller:35357/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_IMAGE_API_VERSION=2
@@ -277,7 +279,7 @@ export OS_PROJECT_DOMAIN_NAME=Default
 export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_NAME=demo
 export OS_USERNAME=demo
-export OS_PASSWORD=DEMO_PASS
+export OS_PASSWORD=locvx1234
 export OS_AUTH_URL=http://controller:5000/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_IMAGE_API_VERSION=2
@@ -289,3 +291,5 @@ Sử dụng script :
 $ . admin-openrc
 $ openstack token issue
 ```
+
+:arrow_right: [Image service](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Image.md)

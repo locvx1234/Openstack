@@ -1,6 +1,8 @@
+:arrow_left: [Image service](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Image.md)
+
 # Compute service
 
-## Overview 
+## Overview Compute service
 
 Sử dụng Compute để quản lý hệ thống cloud computing. OpenStack là một phần chính của IaaS. Các module chính được implement bằng python. 
 
@@ -12,11 +14,11 @@ OpenStack Compute bao gồm các thành phần :
 
 - **nova-api service** : hỗ trợ OpenStack Compute API, Amazon EC2 API, và một Admin API đặc biệt cho user có đặc quyền. 
 - **nova-api-metadata service** : chấp nhận các metadata request từ instance. 
-- **nova-compute service** : một daemon dùng để tạo và ngắt các instance qua các hypervisor API. Ví dụ 
+- **nova-compute service** : một daemon dùng để tạo và ngắt các instance qua các hypervisor API. Ví dụ :
 
-* XenAPI for XenServer/XCP
-* libvirt for KVM or QEMU
-* VMwareAPI for VMware
+	* XenAPI for XenServer/XCP
+	* libvirt for KVM or QEMU
+	* VMwareAPI for VMware
 
 - **nova-placement-api service** : 
 - **nova-scheduler service** :
@@ -29,10 +31,10 @@ OpenStack Compute bao gồm các thành phần :
 - **The queue** : Thường sử dụng RabbitMQ
 - **SQL database** : Lưu trữ các trạng thái build-time và run-time cho hạ tầng cloud, bao gồm :
 
-* Available instance types
-* Instances in use
-* Available networks
-* Projects
+	* Available instance types
+	* Instances in use
+	* Available networks
+	* Projects
 
 Trên lý thuyết, OpenStack Compute có thể hỗ trợ nhiều database có hỗ trợ SQLAlchemy. Các database thường sử dụng là SQLite3, MySQL, MariaDB, PosgreSQL.
 
@@ -341,7 +343,7 @@ password = locvx1234
 
 [DEFAULT]
 # ...
-my_ip = 10.0.10.10 														# line 1481
+my_ip = 10.10.10.10 														# line 1481
 
 use_neutron = True														# line 2306 
 firewall_driver = nova.virt.firewall.NoopFirewallDriver					# line 2465
@@ -527,7 +529,7 @@ virt_type = qemu
 	
 ### Thêm node Compute vào cell database
 
-* Node * : Các lệnh thực hiện trên node Controller 
+**Note**: Các lệnh thực hiện trên node Controller 
 
 - List các hypervisor 
 
@@ -648,3 +650,5 @@ $ openstack image list
 ```
 # nova-status upgrade check
 ```
+
+:arrow_right: [Networking service](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Networking.md)

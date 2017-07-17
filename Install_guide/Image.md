@@ -1,4 +1,6 @@
-## Image service (glance)
+:arrow_left: [Identity](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Identity.md)
+
+## Image service (Glance)
 
 Image service cho phép các user discover, register và retrive các image VM. Bạn có thể lưu trữ các image VM thông qua Image service từ các hệ thống file đơn giản cho đến các hệ thống lưu trữ hướng đối tượng như OpenStack Object Storage.
 
@@ -8,15 +10,15 @@ OpenStack Image service là trung tâm của IaaS. Nó chấp nhận các API re
 
 OpenStack Image service bao gồm các thành phần : 
 
-- *glance-api* : chấp nhận các API cho khám phá, truy xuất và lưu trữ.
+- **glance-api** : chấp nhận các API cho khai thác, truy xuất và lưu trữ.
 
-- *glance-registry* : truy xuất, xử lý, và lưu trữ metadata về các image. Metadata bao gồm các item như size và type. 
+- **glance-registry** : truy xuất, xử lý, và lưu trữ metadata về các image. Metadata bao gồm các item như size và type. 
 
-- *Database* : lưu trữ image và bạn có thể chọn database tùy thuộc vào sở thích. Hầu hết đều sử dụng MySQL hoặc SQLite.
+- **Database** : lưu trữ image và bạn có thể chọn database tùy thuộc vào sở thích. Hầu hết đều sử dụng MySQL hoặc SQLite.
 
-- *Storage repository cho các file image* : Nhiều loại repository đã hỗ trợ bao gồm file system, Object Storage, RADOS block device, VMware datastore và HTTP. Lưu ý rằng một vài database chỉ hỗ trợ chế độ read-only
+- **Storage repository cho các file image** : Nhiều loại repository đã hỗ trợ bao gồm file system, Object Storage, RADOS block device, VMware datastore và HTTP. Lưu ý rằng một vài database chỉ hỗ trợ chế độ read-only
 
-- *Metadata definition service* : Một API chung cho vendor, admin, service và user để định nghĩa metadata. Metadata này có thể là khác loại resource như image, artifact, volume, flavor và aggregate. 
+- **Metadata definition service** : Một API chung cho vendor, admin, service và user để định nghĩa metadata. Metadata này có thể là khác loại resource như image, artifact, volume, flavor và aggregate. 
 
 ### Cài đặt và cấu hình 
 
@@ -310,3 +312,5 @@ $ openstack image list
 | 0fc50da8-b841-4ddd-a457-49a639daa7a0 | cirros | active |
 +--------------------------------------+--------+--------+
 ```
+
+:arrow_right: [Compute service](https://github.com/locvx1234/Openstack/blob/master/Install_guide/Compute.md)
