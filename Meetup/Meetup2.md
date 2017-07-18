@@ -15,3 +15,10 @@ Ghi âm: https://www.box.com/s/g68eohliue2enwxoyzvb
 Slides: https://www.box.com/s/k7v6jv15t4h33gv9zql5
 
 Ghi âm: https://www.box.com/s/5dsst36bqxb7kfb9w4nl
+
+
+http://www.slideshare.net/vietstack/viet-stack-2nd-meetup-tong-ket-tinh-hinh-sau-1st-meetup
+
+http://www.slideshare.net/vietstack/aohoa-slide-vietstackv2
+
+http://www.slideshare.net/microlife/bigdata-cloudcomputingvietstack
