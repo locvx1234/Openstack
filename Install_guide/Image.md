@@ -32,9 +32,10 @@ Phần này mô tả các bước cài đặt Image servive (glance) trên node 
 MariaDB [(none)]> CREATE DATABASE glance;
 	
 MariaDB [(none)]> GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' \
-	IDENTIFIED BY 'GLANCE_DBPASS';
+	IDENTIFIED BY 'locvx1234';
 MariaDB [(none)]> GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' \
-	IDENTIFIED BY 'GLANCE_DBPASS';
+	IDENTIFIED BY 'locvx1234';
+MariaDB [(none)]> exit
 ```
 
 		

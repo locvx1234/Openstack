@@ -303,7 +303,7 @@ $ openstack endpoint create --region RegionOne placement admin http://controller
 
 ```
 # apt install nova-api nova-conductor nova-consoleauth \
-  nova-novncproxy nova-scheduler nova-placement-api
+  nova-novncproxy nova-scheduler nova-placement-api -y
 ```
 
 #### 2. Edit file `/etc/nova/nova.conf`
@@ -327,7 +327,7 @@ transport_url = rabbit://openstack:locvx1234@controller				# line 3021
 
 [api]
 # ...
-auth_strategy = keystone												# line 3085
+auth_strategy = keystone							# line 3085
 
 [keystone_authtoken]
 # ...
@@ -343,31 +343,31 @@ password = locvx1234
 
 [DEFAULT]
 # ...
-my_ip = 10.10.10.10 														# line 1481
+my_ip = 10.10.10.10 						# line 1481
 
-use_neutron = True														# line 2306 
-firewall_driver = nova.virt.firewall.NoopFirewallDriver					# line 2465
+use_neutron = true											# line 2306 
+firewall_driver = nova.virt.firewall.NoopFirewallDriver		# line 2465
 
 [vnc]
-enabled = true															# line 9704
+enabled = true												# line 9704
 # ...
-vncserver_listen = $my_ip												# line 9727			
-vncserver_proxyclient_address = $my_ip									# line 9739
+vncserver_listen = $my_ip									# line 9727			
+vncserver_proxyclient_address = $my_ip						# line 9739
 
 [glance]
 # ...
-api_servers = http://controller:9292									# line 4953
+api_servers = http://controller:9292						# line 4953
 
 [placement]
 # ...
-os_region_name = RegionOne												# line 8129
-project_domain_name = Default											# line 8179
-project_name = service													# line 8173
-auth_type = password													# line 8155
-user_domain_name = Default												# line 8205
-auth_url = http://controller:35357/v3									# line 8161
-username = placement													# line 8199
-password = locvx1234													# line 8208
+os_region_name = RegionOne									# line 8129
+project_domain_name = Default								# line 8179
+project_name = service										# line 8173
+auth_type = password										# line 8155
+user_domain_name = Default									# line 8205
+auth_url = http://controller:35357/v3						# line 8161
+username = placement										# line 8199
+password = locvx1234										# line 8208
 ```
 
 
