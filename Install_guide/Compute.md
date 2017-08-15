@@ -314,6 +314,19 @@ $ openstack endpoint create --region RegionOne placement admin http://controller
 ```
 	
 ```
+[DEFAULT]
+# ...
+my_ip = 10.10.10.10 						# line 1481
+
+use_neutron = true											# line 2306 
+firewall_driver = nova.virt.firewall.NoopFirewallDriver		# line 2465
+
+transport_url = rabbit://openstack:locvx1234@controller				# line 3021
+
+[api]
+# ...
+auth_strategy = keystone							# line 3085
+
 [api_database]
 # ...
 connection = mysql+pymysql://nova:locvx1234@controller/nova_api 		# line 3379
@@ -321,13 +334,9 @@ connection = mysql+pymysql://nova:locvx1234@controller/nova_api 		# line 3379
 # ...
 connection = mysql+pymysql://nova:locvx1234@controller/nova 			# line 4396
 
-[DEFAULT]
+[glance]
 # ...
-transport_url = rabbit://openstack:locvx1234@controller				# line 3021
-
-[api]
-# ...
-auth_strategy = keystone							# line 3085
+api_servers = http://controller:9292						# line 4953
 
 [keystone_authtoken]
 # ...
@@ -341,33 +350,22 @@ project_name = service
 username = nova
 password = locvx1234
 
-[DEFAULT]
+[placement]
 # ...
-my_ip = 10.10.10.10 						# line 1481
-
-use_neutron = true											# line 2306 
-firewall_driver = nova.virt.firewall.NoopFirewallDriver		# line 2465
+os_region_name = RegionOne									# line 8129
+auth_type = password										# line 8155
+auth_url = http://controller:35357/v3						# line 8161
+project_name = service										# line 8173
+project_domain_name = Default								# line 8179
+username = placement										# line 8199
+user_domain_name = Default									# line 8205
+password = locvx1234										# line 8208
 
 [vnc]
 enabled = true												# line 9704
 # ...
 vncserver_listen = $my_ip									# line 9727			
 vncserver_proxyclient_address = $my_ip						# line 9739
-
-[glance]
-# ...
-api_servers = http://controller:9292						# line 4953
-
-[placement]
-# ...
-os_region_name = RegionOne									# line 8129
-project_domain_name = Default								# line 8179
-project_name = service										# line 8173
-auth_type = password										# line 8155
-user_domain_name = Default									# line 8205
-auth_url = http://controller:35357/v3						# line 8161
-username = placement										# line 8199
-password = locvx1234										# line 8208
 ```
 
 
@@ -383,7 +381,7 @@ password = locvx1234										# line 8208
 # su -s /bin/sh -c "nova-manage cell_v2 map_cell0" nova
 ```
 	
-#### 5. Tạo `cell1`	
+#### 5. Tạo `cel11`	
 
 ```
 # su -s /bin/sh -c "nova-manage cell_v2 create_cell --name=cell1 --verbose" nova
