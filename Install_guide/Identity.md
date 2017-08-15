@@ -75,12 +75,13 @@ Khởi tạo Fernet key repository:
 	
 Bootstrap Identity service: 
 
-	# keystone-manage bootstrap --bootstrap-password locvx1234 \
-		--bootstrap-admin-url http://controller:35357/v3/ \
-		--bootstrap-internal-url http://controller:5000/v3/ \
-		--bootstrap-public-url http://controller:5000/v3/ \
-		--bootstrap-region-id RegionOne
-
+```
+# keystone-manage bootstrap --bootstrap-password locvx1234 \
+--bootstrap-admin-url http://controller:35357/v3/ \
+--bootstrap-internal-url http://controller:5000/v3/ \
+--bootstrap-public-url http://controller:5000/v3/ \
+--bootstrap-region-id RegionOne
+```
 ### Cấu hình Apache HTTP server
 
 	# vi /etc/apache2/apache2.conf

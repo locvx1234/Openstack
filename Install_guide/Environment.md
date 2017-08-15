@@ -151,7 +151,7 @@ OpenStack hỗ trợ một vài Message Queue như RabbitMQ, Qpid, ZeroMQ.
 	
 Cài đặt gói RabbitMQ
 
-	# apt install rabbitmq-server
+	# apt install rabbitmq-server -y
 	
 Thêm user openstack với pass locvx1234:
 
