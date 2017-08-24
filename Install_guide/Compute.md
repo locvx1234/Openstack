@@ -429,7 +429,7 @@ Phần này sẽ mô tả các bước cài đặt và cấu hình Compute servi
 #### 1. Cài đặt package nova-compute 
 
 ```
-# apt install nova-compute
+# apt install nova-compute -y
 ```
 	
 #### 2. Edit file `/etc/nova/nova.conf`

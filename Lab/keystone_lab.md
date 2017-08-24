@@ -151,16 +151,11 @@ root@controller:~# curl -s  -H "X-Auth-Token: $OS_TOKEN" -H "Content-Type: appli
 ```
 
 
-- Add role 
+## Add role 
 ```
 openstack role add --project new_project --project-domain new_domain --user new_user --user-domain new_domain user
 ```
 
-- Liệt kê role 
-
-```
-openstack role list --user new_user --project new_project
-```
 
 
 
