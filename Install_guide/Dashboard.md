@@ -11,37 +11,49 @@ Bạn cũng có thể sử dụng Dashboard trong môi trường với các serv
 ### Cài đặt và cấu hình các thành phần 
 
 ```
-# apt install openstack-dashboard
+# apt install openstack-dashboard -y
 ```
 
 Edit file `/etc/openstack-dashboard/local_settings.py`
 
 ```
-OPENSTACK_HOST = "controller"
+
 
 ALLOWED_HOSTS = ['one.example.com', 'two.example.com']  	# Cho phép các host có thể truy cập Dashboard, mặc định là '*' - all 
 
+
+OPENSTACK_API_VERSIONS = {						# line 55
+	"identity": 3,
+	"image": 2,
+	"volume": 2,
+}
+
+OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True 	# line 66 
+
+OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "Default"   # line 74
+
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-CACHES = {
+CACHES = {					# line 131
 	'default': {
 		'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
 		'LOCATION': 'controller:11211',
 	}
 }
 
-OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST
 
-OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
+OPENSTACK_HOST = "controller" # line 161
 
-OPENSTACK_API_VERSIONS = {
-	"identity": 3,
-	"image": 2,
-	"volume": 2,
-}
+OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST  # line 162
 
-OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "Default"
+OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"	    # line 163
 
-OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
+
+
+
+
+
+
+
 ```
 
 Nếu sử dụng networking option 1, disable support cho layer 3 netwoking:

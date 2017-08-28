@@ -404,7 +404,7 @@ physical_interface_mappings = provider:eth0	# line 155
 
 [vxlan]
 enable_vxlan = true							# line 188
-local_ip = OVERLAY_INTERFACE_IP_ADDRESS		# line 209
+local_ip = 10.10.10.10		# line 209 OVERLAY_INTERFACE_IP_ADDRESS
 l2_population = true 						# line 213
 
 [securitygroup]
@@ -476,7 +476,7 @@ metadata_proxy_shared_secret = locvx1234
 
 #### 8. Hoàn tất cài đặt 
 
-```sh
+```
 # su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
 --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
 
@@ -490,7 +490,7 @@ metadata_proxy_shared_secret = locvx1234
 
 Với option 2, restart thêm layer-3 service 
 
-```sh
+```
 # service neutron-l3-agent restart
 ```
 
@@ -500,8 +500,8 @@ Các lệnh thực hiện trên node Compute
 
 - Cài package và edit file `/etc/neutron/neutron.conf`
 
-```sh
-# apt install neutron-linuxbridge-agent
+```
+# apt install neutron-linuxbridge-agent -y
 # cp /etc/neutron/neutron.conf /etc/neutron/neutron.conf.orig 
 # vi /etc/neutron/neutron.conf
 ```
