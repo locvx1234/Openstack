@@ -8,6 +8,7 @@ Các image bao gồm các status :
 - Killed: Có lỗi xảy ra trong quá trình truyền tải dữ liệu của image
 - Deleted: Glance dữ lại các thông tin về image nhưng image không còn được sử dụng. Image này sẽ được xóa đi vào một ngày sau đó
 
+![statusflow](https://github.com/locvx1234/Openstack/blob/master/images/statusflow.jpg)
 
 
 Trước khi làm việc với Keystone, cần khai báo các biến môi trường để xác thực.
