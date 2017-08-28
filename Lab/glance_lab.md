@@ -15,7 +15,7 @@ Trước khi làm việc với Keystone, cần khai báo các biến môi trư�
 
 $ . admin-openrc  
 
-###Liệt kê các image 
+### Liệt kê các image 
 ```
 root@controller:~# openstack image list
 +--------------------------------------+--------+--------+
@@ -26,7 +26,7 @@ root@controller:~# openstack image list
 ```
 
 
-###Xem thông tin chi tiết về image 
+### Xem thông tin chi tiết về image 
 
 ```
 root@controller:~# openstack image show a505feb5-3f25-4e3c-acb1-1f3d35e27747
@@ -58,7 +58,7 @@ root@controller:~# openstack image show cirris
 +------------------+------------------------------------------------------+
 ```
 
-###Kiểm tra thông tin image trong database
+### Kiểm tra thông tin image trong database
 
 ```
 MariaDB [(none)]> select * from glance.image_locations\G
@@ -77,7 +77,7 @@ deleted_at: NULL
 MariaDB [(none)]>
 ```
 
-###Deactivated image
+### Deactivated image
 
 ```
 root@controller:~# openstack image set --deactivate cirros
@@ -89,7 +89,7 @@ root@controller:~# openstack image list
 +--------------------------------------+--------+-------------+
 ```
 
-###Reactivate image 
+### Reactivate image 
 
 ```
 root@controller:~# openstack image set --activate cirros
@@ -101,7 +101,7 @@ root@controller:~# openstack image list
 +--------------------------------------+--------+--------+
 ```
 
-###Delete image
+### Delete image
  
 ```
 root@controller:~# openstack image delete cirros
@@ -129,7 +129,7 @@ deleted_at: 2017-08-28 11:13:23
 MariaDB [(none)]>
 ```
 
-###Upload image 
+### Upload image 
 
 Tải một image có sẵn từ internet 
 
