@@ -282,7 +282,7 @@ MariaDB [(none)]>
 
 Trước tiên phải có token, [xem thêm](https://github.com/locvx1234/Openstack/blob/master/Lab/keystone_lab.md)
 
-Lấy thông tin các image 
+### Lấy thông tin các image 
 
 ```
 curl -s -X GET -H "X-Auth-Token: $OS_TOKEN" http://controller:9292/v2/images | python -mjson.tool
@@ -363,7 +363,7 @@ curl -s -X GET -H "X-Auth-Token: $OS_TOKEN" http://controller:9292/v2/images/c42
 }
 ```
 
-Tạo một image chưa có dữ liệu
+### Tạo một image chưa có dữ liệu
 ```
 curl -i -X POST -H "X-Auth-Token: $OS_TOKEN" \
 -H "Content-Type: application/json" \
@@ -401,7 +401,7 @@ Date: Thu, 31 Aug 2017 09:02:05 GMT
 
 Status của image là queued cho biết image đang sẵn sàng để upload dữ liệu. 
 
-Upload dữ liệu cho image vừa tạo 
+### Upload dữ liệu cho image vừa tạo 
 ```
 curl -i -X PUT -H "X-Auth-Token: $OS_TOKEN" \
 -H "Content-Type: application/octet-stream" \
@@ -446,7 +446,7 @@ root@controller:~# curl -s -X GET -H "X-Auth-Token: $OS_TOKEN" http://controller
 }
 ```
 
-Deactivate image
+### Deactivate image
 ```
 root@controller:~# curl -i -X POST -H "X-Auth-Token: $OS_TOKEN" http://controller:9292/v2/images/e8d2fe2f-1791-4bcd-b12e-7abcdb6d7200/actions/deactivate
 HTTP/1.1 204 No Content
@@ -456,7 +456,7 @@ X-Openstack-Request-Id: req-15fea8c4-0f36-4690-af4c-c2b43f5ece13
 Date: Thu, 31 Aug 2017 09:38:13 GMT
 ```
 
-Reactivate image 
+### Reactivate image 
 
 ```
 root@controller:~# curl -i -X POST -H "X-Auth-Token: $OS_TOKEN" http://controller:9292/v2/images/e8d2fe2f-1791-4bcd-b12e-7abcdb6d7200/actions/reactivate
@@ -467,7 +467,7 @@ X-Openstack-Request-Id: req-73970542-b8e5-4b34-b17c-df95c393c04d
 Date: Thu, 31 Aug 2017 09:38:59 GMT
 ```
 
-Delete image 
+### Delete image 
 
 ```
 root@controller:~# curl -i -X DELETE -H "X-Auth-Token: $OS_TOKEN" http://controller:9292/v2/images/e8d2fe2f-1791-4bcd-b12e-7abcdb6d7200
