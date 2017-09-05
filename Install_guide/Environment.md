@@ -91,6 +91,28 @@ MS Name/IP address         Stratum Poll Reach LastRx Last sample
 	
 Tất cả các node khác tham khảo node Controller để đồng bộ đồng hồ. Thực hiên tương tự trên tất cả các node khác.
 
+Thay vì echo các server ntp.org thì comment dòng 
+
+```
+#pool 2.debian.pool.ntp.org offline iburst
+```
+và thêm 
+```
+server controller iburst
+```
+
+Sau đó restart lại dịch vụ và kiểm tra
+
+```
+root@compute:~# service chrony restart
+root@compute:~# chronyc sources
+210 Number of sources = 1
+MS Name/IP address         Stratum Poll Reach LastRx Last sample
+===============================================================================
+^? controller                    0   6     0   10y     +0ns[   +0ns] +/-    0ns
+```
+
+
 ### OpenStack packages
 
 
@@ -113,6 +135,7 @@ Cài đặt gói OpenStack Client
 
 	# apt install -y python-openstackclient
 
+Các node khác cài đặt tương tự 
 	
 ### SQL database
 

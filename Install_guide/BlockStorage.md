@@ -279,24 +279,85 @@ Thực hiện các bước trên node Storage
 
 Một vài distro đã hỗ trợ sẵn LVM 
 
-- Tạo LVM physical volume `/dev/xvdb`
+- Tạo LVM physical volume `/dev/sdb`
 
 ```
-# pvcreate /dev/xvdb
-
-Physical volume "/dev/xvdb" successfully created
+root@blockstorage:~# pvcreate /dev/sdb
+  Physical volume "/dev/sdb" successfully created
 ```
 
 - Tạo LVM volume group `cinder-volumes`
 
 ```
-# vgcreate cinder-volumes /dev/xvdb
+root@blockstorage:~# vgcreate cinder-volume /dev/sdb
+  Volume group "cinder-volume" successfully created
+```
 
-Volume group "cinder-volumes" successfully created
+- Thêm filter trong section devices ở file `/etc/lvm/lvm.conf`
+
+```
+devices {
+	....
+	filter = ["a/sdb/", "r/.*/"]
+```
+- Edit file `/etc/cinder/cinder.conf` 
+
+Bổ sung các tham số sau 
+
+```
+transport_url = rabbit://openstack:locvx1234@controller
+my_ip = 10.10.10.101
+enabled_backends = lvm
+glance_api_servers = http://controller:9292
+
+[database]
+# ...
+connection = mysql+pymysql://cinder:locvx1234@controller/cinder
+
+[keystone_authtoken]
+# ...
+auth_uri = http://controller:5000
+auth_url = http://controller:35357
+memcached_servers = controller:11211
+auth_type = password
+project_domain_name = default
+user_domain_name = default
+project_name = service
+username = cinder
+password = locvx1234
+
+[lvm]
+# ...
+volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
+volume_group = cinder-volumes
+iscsi_protocol = iscsi
+iscsi_helper = tgtadm
+
+[oslo_concurrency]
+# ...
+lock_path = /var/lib/cinder/tmp
+```
+
+- Restart các dịch vụ
+```
+root@blockstorage:~# service tgt restart
+root@blockstorage:~# service cinder-volume restart
+```
+
+- List 
+
+```
+root@blockstorage:~# . admin-openrc
+root@blockstorage:~# openstack volume service list
++------------------+------------------+------+---------+-------+----------------------------+
+| Binary           | Host             | Zone | Status  | State | Updated At                 |
++------------------+------------------+------+---------+-------+----------------------------+
+| cinder-scheduler | controller       | nova | enabled | up    | 2017-09-05T11:15:41.000000 |
+| cinder-volume    | blockstorage@lvm | nova | enabled | up    | 2017-09-05T11:15:40.000000 |
++------------------+------------------+------+---------+-------+----------------------------+
 ```
 
 
-// TO DO còn dở 
 
 
 :arrow_right: [Additional services]()
